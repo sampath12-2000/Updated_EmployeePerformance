@@ -24,7 +24,7 @@ namespace EmployeePerformanceTracker1.Models
         public string Location { get; set; }
 
         [Display(Name = "Role")]
-        public string Role { get; set; }
+        public string JobRole { get; set; }
 
         [Required(ErrorMessage = "Email Address is required")]
         [EmailAddress]

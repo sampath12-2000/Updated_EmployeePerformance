@@ -1,11 +1,16 @@
 ﻿namespace EmployeePerformanceTracker1.Repository
 {
-    public interface IEmployeeRepository<T1> where T1 : class
+    public interface IEmployeeRepository<TEntity> where TEntity : class
     {
         #region abstract methods
-        Task<IEnumerable<T1>> GetAll();
+        Task<IEnumerable<TEntity>> GetAll();
+        Task<TEntity> GetById(int id);
+        //Task<TEntity> GetByEmployeeId(int EmpId);
+        Task<IEnumerable<TEntity>> GetByMentorId(int MentorId);
+        Task<TEntity> SaveRecord(TEntity entity);
+        Task<TEntity> UpdateRecord(TEntity entity);
 
-        Task<T1> GetById(int id);
+        Task Save();
 
         #endregion
     }

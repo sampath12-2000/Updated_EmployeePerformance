@@ -6,7 +6,7 @@ namespace EmployeePerformanceTracker1.Models
     public class Feedback
     {
         [Key]
-        public int Id { get; set; }
+        public int FeedbackId { get; set; }
 
         public int Rating { get; set; }
 
@@ -18,5 +18,10 @@ namespace EmployeePerformanceTracker1.Models
 
         [ValidateNever]
         public Employee Employee { get; set; }
+
+        public int ProgressId { get; set; }
+        
+        [ValidateNever]
+        public Progress Progress { get; set; }
     }
 }

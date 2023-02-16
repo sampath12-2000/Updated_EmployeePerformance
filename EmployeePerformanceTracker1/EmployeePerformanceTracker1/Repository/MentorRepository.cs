@@ -26,7 +26,7 @@ namespace EmployeePerformanceTracker1.Repository
                     PhoneNo = m.PhoneNo,
                     Location = m.Location,
                     Password=m.Password,
-                    Role=m.Role
+                    JobRole=m.JobRole
 
                 }
                 ).FirstOrDefaultAsync();
@@ -54,7 +54,7 @@ namespace EmployeePerformanceTracker1.Repository
                     mentor1.PhoneNo = mentor.PhoneNo;
                     mentor1.Location = mentor.Location;
                     mentor1.Password = mentor.Password;
-                    mentor1.Role = mentor.Role;
+                    mentor1.JobRole = mentor.JobRole;
                     _dbcontext.SaveChanges();
                 }
                 return mentor1;

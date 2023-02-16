@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EmployeePerformanceTracker1.Migrations
 {
     /// <inheritdoc />
-    public partial class empdatabase : Migration
+    public partial class Again : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +20,7 @@ namespace EmployeePerformanceTracker1.Migrations
                     AdminName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    JobRole = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,7 +38,7 @@ namespace EmployeePerformanceTracker1.Migrations
                     PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    JobRole = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +55,7 @@ namespace EmployeePerformanceTracker1.Migrations
                     Grade = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    JobRole = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EmailId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MentorId = table.Column<int>(type: "int", nullable: false)
@@ -72,31 +72,10 @@ namespace EmployeePerformanceTracker1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Feedbacks",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Rating = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Feedbacks", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Feedbacks_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "progresses",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ProgressId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ProgressDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -104,12 +83,41 @@ namespace EmployeePerformanceTracker1.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_progresses", x => x.Id);
+                    table.PrimaryKey("PK_progresses", x => x.ProgressId);
                     table.ForeignKey(
                         name: "FK_progresses_Employees_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "Employees",
                         principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feedbacks",
+                columns: table => new
+                {
+                    FeedbackId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    ProgessId = table.Column<int>(type: "int", nullable: false),
+                    ProgressId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedbacks", x => x.FeedbackId);
+                    table.ForeignKey(
+                        name: "FK_Feedbacks_Employees_EmployeeId",
+                        column: x => x.EmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "EmployeeId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Feedbacks_progresses_ProgressId",
+                        column: x => x.ProgressId,
+                        principalTable: "progresses",
+                        principalColumn: "ProgressId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -122,6 +130,11 @@ namespace EmployeePerformanceTracker1.Migrations
                 name: "IX_Feedbacks_EmployeeId",
                 table: "Feedbacks",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feedbacks_ProgressId",
+                table: "Feedbacks",
+                column: "ProgressId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_progresses_EmployeeId",

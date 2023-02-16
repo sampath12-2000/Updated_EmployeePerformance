@@ -4,6 +4,7 @@ using EmployeePerformanceTracker1.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeePerformanceTracker1.Migrations
 {
     [DbContext(typeof(EPTDBContext))]
-    partial class EPTDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230213115640_Again")]
+    partial class Again
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,6 +115,9 @@ namespace EmployeePerformanceTracker1.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProgessId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProgressId")

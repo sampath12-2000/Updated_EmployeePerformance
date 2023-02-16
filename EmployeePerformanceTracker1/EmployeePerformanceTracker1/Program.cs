@@ -79,7 +79,12 @@ builder.Services.AddScoped<IMentorRepository<Mentor>,MentorRepository>();
 builder.Services.AddScoped<MentorService, MentorService>();
 builder.Services.AddScoped<IFeedbackRepository<Feedback>, FeedbackRepository>();
 builder.Services.AddScoped<FeedbackService, FeedbackService>();
-
+builder.Services.AddScoped<IUserIdRepository<int>, UserIdRepository>();
+builder.Services.AddScoped<UserIdService, UserIdService>();
+builder.Services.AddScoped<IEmployeeRepository<Employee>, EmployeeRepository>();
+builder.Services.AddScoped<EmployeeService, EmployeeService>();
+builder.Services.AddScoped<IFeedbackRepository<Feedback>, FeedbackRepository>();
+builder.Services.AddScoped<FeedbackService, FeedbackService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

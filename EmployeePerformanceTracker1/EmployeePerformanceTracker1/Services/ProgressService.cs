@@ -3,31 +3,20 @@ using EmployeePerformanceTracker1.Repository;
 
 namespace EmployeePerformanceTracker1.Services
 {
-    public class EmployeeService
+    public class ProgressService
     {
-        IEmployeeRepository<Employee> _repository;
-        public EmployeeService(IEmployeeRepository<Employee> repository)
+        IProgressDescription<Progress> _repository;
+        public ProgressService(IProgressDescription<Progress> repo)
         {
-            _repository = repository;
+            _repository = repo;
         }
 
-        #region getall
-        
-        public async Task<IEnumerable<Employee>> GetAll()
-        {
-          return await _repository.GetAll();
-        }
-
-
-
-        #endregion
-
-        #region getbyid
-        public async Task<Employee> GetById(int id)
+        #region getprogressbyemployeeid
+        public async Task<IEnumerable<Progress>> GetByEmployeeId(int employeeId)
         {
             try
             {
-                return await _repository.GetById(id);
+                return await _repository.GetByEmployeeId(employeeId);
             }
             catch (Exception ex)
             {
@@ -36,12 +25,12 @@ namespace EmployeePerformanceTracker1.Services
         }
         #endregion
 
-        #region getbymentorid
-        public async Task<IEnumerable<Employee>> GetByMentorId(int MentorId)
+        #region getbyid
+        public async Task<Progress> GetById(int id)
         {
             try
             {
-                return await _repository.GetByMentorId(MentorId);
+                return await _repository.GetById(id);
             }
             catch (Exception ex)
             {
@@ -52,11 +41,11 @@ namespace EmployeePerformanceTracker1.Services
         #endregion
 
         #region insert
-        public async Task<Employee> SaveRecord(Employee entity)
+        public async Task<Progress> SaveProgressDescription(Progress entity)
         {
             try
             {
-                return await _repository.SaveRecord(entity);
+                return await _repository.SaveProgressDescription(entity);
             }
             catch (Exception ex)
             {
@@ -66,11 +55,11 @@ namespace EmployeePerformanceTracker1.Services
         #endregion
 
         #region update
-        public async Task<Employee> UpdateRecord(Employee entity)
+        public async Task<Progress> UpdateProgressDescription(Progress entity)
         {
             try
             {
-                return await _repository.UpdateRecord(entity);
+                return await _repository.UpdateProgressDescription(entity);
             }
             catch (Exception ex)
             {

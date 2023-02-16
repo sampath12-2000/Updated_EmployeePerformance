@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeePerformanceTracker1.Migrations
 {
     [DbContext(typeof(EPTDBContext))]
-    [Migration("20230208065359_empdatabase")]
-    partial class empdatabase
+    [Migration("20230214052838_again2")]
+    partial class again2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,14 +41,14 @@ namespace EmployeePerformanceTracker1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("JobRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AdminId");
 
@@ -75,6 +75,10 @@ namespace EmployeePerformanceTracker1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("JobRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Location")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -91,10 +95,6 @@ namespace EmployeePerformanceTracker1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("EmployeeId");
 
                     b.HasIndex("MentorId");
@@ -104,11 +104,11 @@ namespace EmployeePerformanceTracker1.Migrations
 
             modelBuilder.Entity("EmployeePerformanceTracker1.Models.Feedback", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("FeedbackId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("FeedbackId"));
 
                     b.Property<string>("Comment")
                         .IsRequired()
@@ -117,12 +117,17 @@ namespace EmployeePerformanceTracker1.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProgressId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("FeedbackId");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ProgressId");
 
                     b.ToTable("Feedbacks");
                 });
@@ -136,6 +141,10 @@ namespace EmployeePerformanceTracker1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MentorId"));
 
                     b.Property<string>("EmailId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("JobRole")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -156,10 +165,6 @@ namespace EmployeePerformanceTracker1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("MentorId");
 
                     b.ToTable("Mentors");
@@ -167,11 +172,11 @@ namespace EmployeePerformanceTracker1.Migrations
 
             modelBuilder.Entity("EmployeePerformanceTracker1.Models.Progress", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProgressId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProgressId"));
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
@@ -183,7 +188,7 @@ namespace EmployeePerformanceTracker1.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProgressId");
 
                     b.HasIndex("EmployeeId");
 
@@ -209,7 +214,15 @@ namespace EmployeePerformanceTracker1.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EmployeePerformanceTracker1.Models.Progress", "Progress")
+                        .WithMany()
+                        .HasForeignKey("ProgressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Employee");
+
+                    b.Navigation("Progress");
                 });
 
             modelBuilder.Entity("EmployeePerformanceTracker1.Models.Progress", b =>

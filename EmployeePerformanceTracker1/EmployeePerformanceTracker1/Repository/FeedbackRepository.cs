@@ -17,10 +17,11 @@ namespace EmployeePerformanceTracker1.Repository
             {
                 var feedback = new Feedback()
                 {
-                    Id = entity.Id,
+                    FeedbackId = entity.FeedbackId,
                     Rating = entity.Rating,
                     Comment = entity.Comment,
-                    EmployeeId = entity.EmployeeId
+                    EmployeeId = entity.EmployeeId,
+                    ProgressId = entity.ProgressId
                 };
                 _context.Feedbacks.Add(feedback);
                 await _context.SaveChangesAsync();
@@ -38,13 +39,14 @@ namespace EmployeePerformanceTracker1.Repository
         {
             try
             {
-                var feedback=await _context.Feedbacks.FirstOrDefaultAsync(f => f.Id == entity.Id);
+                var feedback=await _context.Feedbacks.FirstOrDefaultAsync(f => f.FeedbackId == entity.FeedbackId);
                 if (feedback != null)
                 {
-                    feedback.Id = entity.Id;
+                    feedback.FeedbackId = entity.FeedbackId;
                     feedback.Rating = entity.Rating;
                     feedback.Comment = entity.Comment;
                     feedback.EmployeeId = entity.EmployeeId;
+                    feedback.ProgressId = entity.ProgressId;
 
                     _context.SaveChanges();
                 }
